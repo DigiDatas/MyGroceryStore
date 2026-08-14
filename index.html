@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shawarmax Menu</title>
+    <title>My Grocery</title>
   <link rel="manifest" href="https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/manifest.json">
     <meta name="theme-color" content="#ef4444">
     <link rel="apple-touch-icon" href="logo.png">
@@ -15,7 +15,7 @@
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    
+  
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
         
@@ -383,10 +383,10 @@
                 <p id="modalDesc" class="text-gray-600 mb-4 leading-relaxed text-sm"></p>
                 
                 <div class="flex flex-wrap gap-2 mb-4">
-                    <div class="flex items-center text-gray-700 text-sm bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-lg inline-flex">
-                        <i class="fas fa-fire text-orange-500 me-2 text-lg"></i>
+                    <div class="flex items-center text-gray-700 text-sm bg-green-50 border border-green-200 px-3 py-1.5 rounded-lg inline-flex shadow-sm">
+                        <i class="fas fa-weight-hanging text-green-600 me-2 text-lg"></i>
                         <span id="modalCalories" class="font-bold text-gray-900 text-base me-1"></span>
-                        <span id="label-calories" class="text-xs">Calories</span>
+                        <span id="label-calories" class="text-xs font-bold text-green-700">Size/Unit</span>
                     </div>
                 </div>
 
@@ -528,11 +528,16 @@
             <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50">
                 <div class="flex items-center gap-3">
                     <img id="cart-brand-logo" src="" class="w-10 h-10 rounded-full object-cover hidden">
-                    <h2 class="text-xl font-bold text-gray-900">Your Bill</h2>
+                    <h2 class="text-xl font-bold text-gray-900">Your Cart</h2>
                 </div>
-                <button onclick="closeCartModal()" class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center hover:bg-gray-300 transition">
-                    <i class="fas fa-times"></i>
-                </button>
+                <div class="flex items-center gap-2">
+                    <button onclick="clearCart()" class="text-xs font-bold text-red-500 bg-red-50 hover:bg-red-100 border border-red-200 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 shadow-sm">
+                        <i class="fas fa-trash-alt"></i> Clear
+                    </button>
+                    <button onclick="closeCartModal()" class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center hover:bg-gray-300 transition shadow-sm">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             </div>
 
             <div class="flex-grow overflow-y-auto p-4 bg-gray-50" id="cart-items-container">
@@ -1444,11 +1449,8 @@
                         `;
                     });
                 };
-                window.renderModalVariants();
-                document.getElementById('modal-cart-btn').style.display = 'none'; // Hide generic cart button
-            } else {
-                document.getElementById('modal-cart-btn').style.display = 'flex'; // Show generic cart button
-            }
+                    window.renderModalVariants();
+                }
             if(item.recipe) {
                 document.getElementById('modalRecipe').textContent = item.recipe; recipeArea.classList.remove('hidden'); window.toggleRecipe(true); 
                 setTimeout(() => {
@@ -1506,25 +1508,32 @@
 
                 if (matchedItems.length > 0) {
                     matchedItems.forEach(relItem => {
+                        const isVar = relItem.variants && relItem.variants.length > 0;
+                        
+                        const actionBtn = isVar 
+                            ? `<button type="button" onclick="event.stopPropagation(); openModal('${relItem.id}')" class="bg-blue-500 text-white text-[8px] font-bold px-2 py-1 rounded-full shadow-sm hover:bg-blue-600 transition-colors pointer-events-auto z-10 relative">Options</button>`
+                            : `<button type="button" onclick="event.stopPropagation(); toggleQuickCart('${relItem.id}')" class="quick-add-btn-${relItem.id} bg-green-500 text-white w-5 h-5 rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-colors pointer-events-auto z-10 relative"><i class="quick-add-icon-${relItem.id} fas fa-plus text-[8px] transition-transform duration-500 pointer-events-none"></i></button>`;
+
                         relatedSlider.innerHTML += `
-                            <div class="relative w-[28vw] sm:w-[110px] flex-shrink-0 snap-start bg-orange-50 border border-orange-100 rounded-xl p-2 shadow-sm cursor-pointer hover:shadow-md transition-shadow group">
+                            <div class="relative w-[28vw] sm:w-[110px] flex-shrink-0 snap-start bg-green-50 border border-green-100 rounded-xl p-2 shadow-sm cursor-pointer hover:shadow-md transition-shadow group">
                                 <div onclick="openModal('${relItem.id}')">
-                                    <img src="${relItem.img}" class="w-full h-16 object-cover rounded-lg mb-1.5 pointer-events-none" onerror="if(this.src.includes('.jpg')) { this.src=this.src.replace('.jpg', '.png'); } else if(this.src.includes('.png')) { this.src=this.src.replace('.png', '.jpeg'); } else { this.onerror=null; this.src='${rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/logo.png'}'; }">
+                                    <img src="${relItem.img}" class="w-full h-16 object-cover rounded-lg mb-1.5 pointer-events-none" onerror="if(this.src.includes('.jpg')) { this.src=this.src.replace('.jpg', '.png'); } else if(this.src.includes('.png')) { this.src=this.src.replace('.png', '.jpeg'); } else { this.onerror=null; this.src='${rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/logo.png'}'; }">
                                     <h4 class="text-[10px] font-bold text-gray-800 line-clamp-1 pointer-events-none">${relItem.name}</h4>
                                 </div>
                                 <div class="flex justify-between items-center mt-1 pointer-events-none">
-                                    <p class="text-[10px] text-orange-600 font-bold flex items-baseline gap-1">${getSmartCurrency(globalCurrency, '')} <span>${relItem.price}</span></p>
-                                    <button type="button" onclick="event.stopPropagation(); toggleQuickCart('${relItem.id}')" class="quick-add-btn-${relItem.id} bg-orange-500 text-white w-5 h-5 rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-colors pointer-events-auto z-10 relative">
-                                        <i class="quick-add-icon-${relItem.id} fas fa-plus text-[8px] transition-transform duration-500 pointer-events-none"></i>
-                                    </button>
+                                    <p class="text-[10px] text-green-700 font-bold flex items-baseline gap-1">${getSmartCurrency(globalCurrency, '')} <span>${relItem.price}</span></p>
+                                    ${actionBtn}
                                 </div>
                             </div>
                         `;
                     });
                     relatedArea.classList.remove('hidden'); relatedArea.classList.add('flex');
-                    setupDraggable('related-slider'); updateQuickAddButtons();
+                    setupDraggable('related-slider'); 
                 } else { relatedArea.classList.add('hidden'); relatedArea.classList.remove('flex'); }
             } else { relatedArea.classList.add('hidden'); relatedArea.classList.remove('flex'); }
+
+            // FIX: Always run this so the button color updates properly for every item!
+            updateQuickAddButtons(); 
 
             const modal = document.getElementById('productModal');
             const backdrop = document.getElementById('modalBackdrop');
@@ -1628,11 +1637,21 @@
         }
 
         function smartWhatsAppOrder() {
+            const item = activeMenuData.find(i => String(i.id) === String(currentOpenItemId));
+            const isVariable = item && item.variants && item.variants.length > 0;
+
             if (cart.length > 0) {
                 const isAlreadyInCart = cart.some(c => String(c.id) === String(currentOpenItemId));
-                if (!isAlreadyInCart) { addToCart(); }
+                // Only auto-add if it's NOT a variable item, preventing the parent duplicate bug
+                if (!isAlreadyInCart && !isVariable) { addToCart(); }
                 openCartModal();
-            } else { openWhatsAppItem(); }
+            } else { 
+                if (isVariable) {
+                    alert(currentLang === 'en' ? 'Please select a size/option first by clicking the + button.' : 'يرجى تحديد حجم/خيار أولاً بالضغط على زر +.');
+                } else {
+                    openWhatsAppItem(); 
+                }
+            }
         }        
 
         function shareItem() {
@@ -1789,6 +1808,23 @@
 
         function updateQuickAddButtons() {
             activeMenuData.forEach(item => {
+                // 1. Update Related Items / Category Page Quick Add Buttons
+                const btns = document.querySelectorAll(`.quick-add-btn-${item.id}`);
+                const icons = document.querySelectorAll(`.quick-add-icon-${item.id}`);
+                const isInCart = cart.some(c => String(c.id) === String(item.id));
+                
+                btns.forEach(btn => {
+                    btn.className = isInCart 
+                        ? `quick-add-btn-${item.id} bg-red-500 text-white w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center shadow-md hover:bg-red-600 hover:scale-110 transition-colors duration-300 z-10 relative pointer-events-auto`
+                        : `quick-add-btn-${item.id} bg-green-500 text-white w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center shadow-md hover:bg-green-600 hover:scale-110 transition-colors duration-300 z-10 relative pointer-events-auto`;
+                });
+                icons.forEach(icon => {
+                    icon.className = isInCart
+                        ? `quick-add-icon-${item.id} fas fa-minus text-[8px] sm:text-[10px] transition-transform duration-500 rotate-180 pointer-events-none`
+                        : `quick-add-icon-${item.id} fas fa-plus text-[8px] sm:text-[10px] transition-transform duration-500 rotate-0 pointer-events-none`;
+                });
+
+                // 2. Update Main Grid Steppers
                 if (item.variants && item.variants.length > 0) return; // Skip updating stepper for variable items
                 
                 const containers = document.querySelectorAll(`.stepper-container-${item.id}`);
@@ -1815,13 +1851,26 @@
 
             const modalCartBtn = document.getElementById('modal-cart-btn'); const modalCartIcon = document.getElementById('modal-cart-icon'); const modalCartText = document.getElementById('modal-cart-text');
             if (modalCartBtn && currentOpenItemId) {
-                const isInCart = cart.some(c => String(c.id) === String(currentOpenItemId));
-                if (isInCart) {
-                    modalCartBtn.className = "flex-1 bg-red-500 text-white text-center py-3 rounded-xl font-bold hover:bg-red-600 transition-all duration-300 shadow-md flex items-center justify-center gap-2";
-                    modalCartIcon.className = "fas fa-trash-alt text-lg"; modalCartText.innerText = "Remove from Cart";
+                const item = activeMenuData.find(i => String(i.id) === String(currentOpenItemId));
+                const isVariable = item && item.variants && item.variants.length > 0;
+                
+                if (isVariable) {
+                    // Convert button to a "View Cart" shortcut for variant items
+                    modalCartBtn.onclick = function() { openCartModal(); };
+                    modalCartBtn.className = "flex-1 bg-blue-500 text-white text-center py-3 rounded-xl font-bold hover:bg-blue-600 transition-all duration-300 shadow-md flex items-center justify-center gap-2";
+                    modalCartIcon.className = "fas fa-shopping-basket text-lg"; 
+                    modalCartText.innerText = currentLang === 'en' ? "View Cart" : "عرض السلة";
                 } else {
-                    modalCartBtn.className = "flex-1 bg-green-500 text-white text-center py-3 rounded-xl font-bold hover:bg-green-600 transition-all duration-300 shadow-md flex items-center justify-center gap-2";
-                    modalCartIcon.className = "fas fa-cart-plus text-lg"; modalCartText.innerText = "Add to Cart";
+                    // Normal item behavior
+                    modalCartBtn.onclick = function() { toggleQuickCart(currentOpenItemId); };
+                    const isInCart = cart.some(c => String(c.id) === String(currentOpenItemId));
+                    if (isInCart) {
+                        modalCartBtn.className = "flex-1 bg-red-500 text-white text-center py-3 rounded-xl font-bold hover:bg-red-600 transition-all duration-300 shadow-md flex items-center justify-center gap-2";
+                        modalCartIcon.className = "fas fa-trash-alt text-lg"; modalCartText.innerText = currentLang === 'en' ? "Remove from Cart" : "إزالة من السلة";
+                    } else {
+                        modalCartBtn.className = "flex-1 bg-green-500 text-white text-center py-3 rounded-xl font-bold hover:bg-green-600 transition-all duration-300 shadow-md flex items-center justify-center gap-2";
+                        modalCartIcon.className = "fas fa-cart-plus text-lg"; modalCartText.innerText = currentLang === 'en' ? "Add to Cart" : "أضف للسلة";
+                    }
                 }
             }
         }
@@ -1877,6 +1926,13 @@
 
         function closeCartModal() {
             const modal = document.getElementById('cartModal'); modal.classList.remove('flex'); modal.classList.add('hidden'); document.body.style.overflow = '';
+        }
+
+        function clearCart() {
+            if(confirm(currentLang === 'en' ? 'Are you sure you want to clear your cart?' : 'هل أنت متأكد أنك تريد تفريغ السلة؟')) {
+                cart = [];
+                updateCartUI();
+            }
         }
 
         window.addVariantToCart = function(parentId, variantId) {
