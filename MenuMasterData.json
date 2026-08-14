@@ -33,7 +33,7 @@
       "L": "English&Arabic",
       "M": "3 Riyal Around 3 Km",
       "N": "https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/logo.png",
-      "O": "https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/images/banner/Banner01.jpg,https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/images/banner/Banner02.jpg",
+      "O": "https://bf1af2.akinoncloudcdn.com/cms/2026/08/06/e42c0ee5-e26b-4be3-8f01-8eee1f966a48_size1080x360_cropCenter.png,https://bf1af2.akinoncloudcdn.com/cms/2026/08/09/de4f6d69-5784-4ab5-8736-b570010f1552_size1080x360_cropCenter.png,https://bf1af2.akinoncloudcdn.com/cms/2026/08/06/ed60066a-0d8a-432d-b2c5-81c6c273f1f3_size1080x360_cropCenter.png,https://bf1af2.akinoncloudcdn.com/cms/2026/08/05/acd392dc-0adc-46d1-8210-1e1ca442486b_size1080x360_cropCenter.png,https://bf1af2.akinoncloudcdn.com/cms/2026/07/21/08606733-a01b-406e-b90a-b7064b003595_size1080x360_cropCenter.png",
       "P": true
     },
     {
@@ -51,7 +51,7 @@
       "L": "",
       "M": "",
       "N": "",
-      "O": "Banner02.jpg",
+      "O": "https://bf1af2.akinoncloudcdn.com/cms/2026/08/14/8e1f7f8a-11a7-4b1a-80d9-c6e78790efe3_size1080x360_cropCenter.png",
       "P": ""
     },
     {
@@ -69,7 +69,7 @@
       "L": "",
       "M": "",
       "N": "",
-      "O": "Banner03.jpg",
+      "O": "https://bf1af2.akinoncloudcdn.com/cms/2026/08/13/5f9b8bc7-2e48-439c-887e-feb4bd95fd1f_size1080x360_cropCenter.png",
       "P": ""
     },
     {
@@ -87,7 +87,7 @@
       "L": "",
       "M": "",
       "N": "",
-      "O": "Banner04.jpg",
+      "O": "https://bf1af2.akinoncloudcdn.com/cms/2026/08/13/b67d34c1-d005-43a5-a50e-0e84a0623d46_size1080x360_cropCenter.png",
       "P": ""
     },
     {
@@ -105,7 +105,25 @@
       "L": "",
       "M": "",
       "N": "",
-      "O": "Banner05.jpg",
+      "O": "https://bf1af2.akinoncloudcdn.com/cms/2026/08/13/9add500c-248d-4b41-ba81-4dbf56009b0c_size1080x360_cropCenter.png",
+      "P": ""
+    },
+    {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": "",
+      "E": "",
+      "F": "",
+      "G": "",
+      "H": "",
+      "I": "",
+      "J": "",
+      "K": "",
+      "L": "",
+      "M": "",
+      "N": "",
+      "O": "https://bf1af2.akinoncloudcdn.com/cms/2026/07/07/f607c620-caf3-4cb9-8067-1de2b20e304d_size1080x360_cropCenter.png",
       "P": ""
     }
   ],
@@ -124,7 +142,7 @@
       "C": "Opening day Offer",
       "D": 50,
       "E": 40,
-      "F": "https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/images/Offer/Offer01.jpg"
+      "F": "https://bf1af2.akinoncloudcdn.com/cms/2025/04/03/011ca4a6-dd67-4141-b2a0-ba58b2fab136_size750x403_cropCenter.png"
     },
     {
       "A": 2,
@@ -132,15 +150,15 @@
       "C": "Opening day Offer",
       "D": 25,
       "E": 21,
-      "F": "https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/images/Offer/Offer01.jpg"
+      "F": "https://bf1af2.akinoncloudcdn.com/cms/2025/04/03/c6787467-1471-4cd6-91fe-6cd01dac0df3_size384x201_cropCenter.png"
     },
     {
       "A": 3,
       "B": "Buy 1 Get 1 FREE",
       "C": "Opening day Offer",
-      "D": "",
-      "E": "",
-      "F": ""
+      "D": 100,
+      "E": 85,
+      "F": "https://bf1af2.akinoncloudcdn.com/cms/2025/04/03/abab6834-f71f-44ff-8a4c-5b1aa29a25a3_size384x201_cropCenter.png"
     }
   ],
   "03_Catalog_English": [
@@ -174,10 +192,10 @@
       "I": "1 kg",
       "J": "",
       "K": "s",
-      "L": "https://static.vecteezy.com/system/resources/previews/026/745/550/large_2x/of-tomato-isolated-on-white-background-photo.jpg",
+      "L": "https://static.vecteezy.com/system/resources/previews/026/745/550/large_2x/of-tomato-isolated-on-white-background-photo.jpg,https://bf1af2.akinoncloudcdn.com/products/2025/12/27/160138/82b34739-e437-448e-8085-f1910f669b53_size256x239_cropCenter.jpg,https://bf1af2.akinoncloudcdn.com/products/2024/10/01/160698/84cee097-efb4-4f17-961c-001f94a2650e_size256x239_cropCenter.jpg",
       "M": "",
       "N": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "O": "",
+      "O": "https://bf1af2.akinoncloudcdn.com/cms/2026/07/22/c304100e-f5ae-459d-a3e5-a9c56a499cfa_size640x777_cropCenter.png",
       "P": ""
     },
     {
@@ -195,7 +213,7 @@
       "L": "https://bf1af2.akinoncloudcdn.com/products/2024/10/01/151024/fff097cd-9e36-493c-8ed9-0352c758b352_size1920_cropCenter.jpg",
       "M": "",
       "N": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "O": "",
+      "O": "https://bf1af2.akinoncloudcdn.com/cms/2025/04/29/acca29ce-c2b3-4ccd-8ad5-6403eb630241_size640x1039_cropCenter.jpg",
       "P": true
     },
     {
@@ -210,7 +228,7 @@
       "I": "1 kg",
       "J": "",
       "K": "",
-      "L": "https://fruitfortheoffice.co.uk/media/catalog/product/cache/22f8b13a74fce530a016d5f78df80ce0/1/9/1918.jpg",
+      "L": "https://bf1af2.akinoncloudcdn.com/products/2025/02/17/160409/0c219c6e-d75d-4f04-b0a7-6d8035de5698_size256x239_cropCenter.jpg,https://fruitfortheoffice.co.uk/media/catalog/product/cache/22f8b13a74fce530a016d5f78df80ce0/1/9/1918.jpg,https://bf1af2.akinoncloudcdn.com/products/2025/01/28/150617/84e06430-f33c-4705-8893-1c28dbf7ac60_size256x239_cropCenter.jpg",
       "M": "",
       "N": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
       "O": "",
