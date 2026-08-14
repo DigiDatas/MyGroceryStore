@@ -15,7 +15,8 @@
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-  
+    
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
         
@@ -546,7 +547,7 @@
             <div class="p-4 bg-white border-t border-gray-200 shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)]">
                 <div class="mb-3 bg-gray-50 p-2.5 rounded-xl border border-gray-200">
                     <div class="flex justify-between items-center mb-3">
-                        <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider">Dining Option</label>
+                        <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider">Delivery Option</label>
                         <span id="bill-datetime" class="text-[10px] text-gray-600 font-bold bg-white px-2 py-1 rounded border border-gray-200 shadow-sm"></span>
                     </div>
                     
@@ -559,6 +560,12 @@
                         <button onclick="setFulfillmentType('Pickup')" id="btn-type-pickup" class="flex-1 py-2 rounded-lg border-2 border-gray-200 bg-white text-gray-500 font-bold text-sm transition-all flex items-center justify-center gap-2 hover:bg-gray-50">
                             <i class="fas fa-store"></i> Store Pickup
                         </button>
+                    </div>
+
+                    <div id="customer-details-container" class="transition-all duration-300 mt-3 space-y-2">
+                        <div class="text-[10px] font-bold text-gray-400 uppercase mb-1 text-center flex items-center gap-2 before:h-px before:flex-1 before:bg-gray-200 after:h-px after:flex-1 after:bg-gray-200">Customer Details</div>
+                        <input type="text" id="customer-name" placeholder="Full Name" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium text-gray-700 focus:outline-none focus:border-green-500 transition-colors">
+                        <input type="tel" id="customer-phone" placeholder="Mobile Number (10 digits)" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium text-gray-700 focus:outline-none focus:border-green-500 transition-colors">
                     </div>
 
                     <div id="address-input-container" class="transition-all duration-300 mt-2">
@@ -941,27 +948,32 @@
                 if(!row.B || !row.D) return;
 
                 const safeId = row.A ? String(row.A).trim() : 'item-' + Math.random().toString(36).substr(2, 9);
-                const isVar = String(row.O || "").trim().toLowerCase();
+                const isVar = String(row.P || "").trim().toLowerCase();
                 const isChild = isVar === 'true' || isVar === 'yes';
-                const brandLogo = rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/logo.png';
+                const brandLogo = rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/logo.png';
 
                 const item = {
                     id: safeId,
-                    mainCat: String(row.B).trim(),
-                    subCat: String(row.C || "Other").trim(),
-                    name: String(row.D).trim(),
-                    order: parseInt(row.E) || 999, 
-                    price: parseFloat(row.F) || 0,
-                    desc: row.G || "",
-                    calories: row.H || "",
-                    recipe: row.I || "",
-                    isTodaySpecial: String(row.J || "").trim().toLowerCase() === 'today special',
+                    catSort: parseInt(row.B) || 999, // NEW: Reads your Category Sort number in Column B!
+                    mainCat: String(row.C).trim(),
+                    subCat: String(row.D || "Other").trim(),
+                    name: String(row.E).trim(),
+                    order: parseInt(row.F) || 999, 
+                    price: parseFloat(row.G) || 0,
+                    desc: row.H || "",
+                    calories: row.I || "",
+                    recipe: row.J || "",
+                    isTodaySpecial: (() => {
+                        const badgeVal = String(row.K || "").trim().toLowerCase();
+                        // Triggers if there is ANY text, unless that text is "false" or "no"
+                        return badgeVal !== "" && badgeVal !== "false" && badgeVal !== "no";
+                    })(),
                     variants: [],
                     imgUrls: (() => {
                         let urls = [];
                         const v = "?v=" + new Date().getTime(); 
-                        if (row.K) {
-                            urls = String(row.K).split(',').map(u => {
+                        if (row.L) {
+                            urls = String(row.L).split(',').map(u => {
                                 let clean = u.trim();
                                 if (!clean) return null;
                                 if (!clean.startsWith('http')) return `https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/images/ItemImages/${clean}${clean.includes('?') ? '' : v}`;
@@ -973,15 +985,15 @@
                         return [...new Set(urls)];
                     })(),
                     img: (() => {
-                        if (row.K) {
-                            let first = String(row.K).split(',')[0].trim();
+                        if (row.L) {
+                            let first = String(row.L).split(',')[0].trim();
                             return first.startsWith('http') ? first : `https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/images/ItemImages/${first}`;
                         }
                         return brandLogo;
                     })(),
-                    video: row.L || "",
-                    reviewLinks: row.M || "",
-                    flashCards: row.N || "" 
+                    video: row.M || "",
+                    reviewLinks: row.N || "",
+                    flashCards: row.O || "" 
                 };
 
                 if (isChild) {
@@ -1016,6 +1028,15 @@
                 }
             });
 
+            // FIX: Sort the main categories based on the catSort (Column B) numbers
+            const categoryMap = {};
+            activeMenuData.forEach(item => {
+                if (!categoryMap[item.mainCat] || item.catSort < categoryMap[item.mainCat]) {
+                    categoryMap[item.mainCat] = item.catSort;
+                }
+            });
+            mainCategories.sort((a, b) => categoryMap[a] - categoryMap[b]);
+
             renderCategoryFilters();
             renderSubCategoryFilters();
             executeFilter();
@@ -1029,7 +1050,7 @@
             if(lower.includes('bakery') || lower.includes('bread') || lower.includes('مخبوزات') || lower.includes('خبز')) return 'fa-bread-slice';
             if(lower.includes('meat') || lower.includes('لحوم') || lower.includes('دجاج')) return 'fa-drumstick-bite';
             if(lower.includes('seafood') || lower.includes('fish') || lower.includes('أسماك') || lower.includes('بحريات')) return 'fa-fish';
-            if(lower.includes('drink') || lower.includes('beverage') || lower.includes('مشروب') || lower.includes('عصير')) return 'fa-bottle-water';
+            if(lower.includes('drink') || lower.includes('beverage') || lower.includes('مشروب') || lower.includes('عصير')) return 'fa-glass-cheers';
             if(lower.includes('snack') || lower.includes('تسالي') || lower.includes('سناك')) return 'fa-cookie';
             if(lower.includes('pantry') || lower.includes('grocery') || lower.includes('بقالة') || lower.includes('معلبات')) return 'fa-box-open';
             if(lower.includes('household') || lower.includes('cleaning') || lower.includes('منظفات')) return 'fa-spray-can';
@@ -1104,8 +1125,8 @@
             setupDraggable('sub-category-filters');
         }
 
-        function setupDraggable(elementId) {
-            const slider = document.getElementById(elementId);
+        function setupDraggable(elementOrId) {
+            const slider = typeof elementOrId === 'string' ? document.getElementById(elementOrId) : elementOrId;
             if(!slider) return;
             if (slider.dataset.dragAttached === "true") return;
             slider.dataset.dragAttached = "true";
@@ -1267,6 +1288,9 @@
 
             if (!hasItems) { container.classList.add('hidden'); emptyState.classList.remove('hidden'); } 
             else { container.classList.remove('hidden'); container.classList.add('flex'); emptyState.classList.add('hidden'); }
+            
+            // FIX: Tell the app to draw the green + buttons immediately when the page loads!
+            updateQuickAddButtons(); 
             gatherFlashCards(); 
         }
 
@@ -1287,7 +1311,7 @@
             const grid = document.createElement('div');
             if (isHighlight) {
                 const rowClass = items.length > 20 ? 'grid-rows-2' : 'grid-rows-1';
-                grid.className = `grid ${rowClass} grid-flow-col gap-3 sm:gap-4 overflow-x-auto hide-scrollbar pb-4 snap-x snap-mandatory`;
+                grid.className = `highlight-auto-scroll grid ${rowClass} grid-flow-col gap-3 sm:gap-4 overflow-x-auto hide-scrollbar pb-4 snap-x snap-mandatory`;
             } else { grid.className = "grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6"; }
 
             items.forEach((item, index) => {
@@ -1341,6 +1365,11 @@
                 grid.appendChild(card);
             });
             section.appendChild(grid); container.appendChild(section);
+            
+            // FIX: Attach desktop click-and-drag to the highlight grid!
+            if (isHighlight) {
+                setupDraggable(grid);
+            }
         }
 
         function openModal(id) {
@@ -1597,6 +1626,19 @@
         function sendOrderViaWhatsApp() {
             if(cart.length === 0 || !rawBranding.D) return;
             
+            const custName = document.getElementById('customer-name').value.trim();
+            const custPhone = document.getElementById('customer-phone').value.trim();
+
+            if (custName.length < 3) {
+                alert(currentLang === 'en' ? 'Please enter a valid full name (at least 3 characters).' : 'يرجى إدخال اسم كامل صحيح (3 أحرف على الأقل).');
+                return;
+            }
+
+            if (custPhone.length !== 10) {
+                alert(currentLang === 'en' ? `Please enter exactly 10 digits for your mobile number. You entered ${custPhone.length} digits.` : `يرجى إدخال 10 أرقام بالضبط لرقم هاتفك المحمول. لقد أدخلت ${custPhone.length} أرقام.`);
+                return;
+            }
+
             const storeName = rawBranding.B || 'My Grocery Store';
             const orderDate = new Date().toLocaleString('en-US', { day: '2-digit', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit' });
             
@@ -1607,14 +1649,14 @@
                 const addressInput = document.getElementById('delivery-address').value.trim();
                 if (addressInput) { locationText = `\n📍 *Delivery Address:*\n${addressInput}\n`; } 
                 else {
-                    const proceed = confirm("You haven't entered a delivery address. Do you want to send the order anyway and share your location directly in WhatsApp?");
+                    const proceed = confirm(currentLang === 'en' ? "You haven't entered a delivery address. Do you want to send the order anyway and share your location directly in WhatsApp?" : "لم تقم بإدخال عنوان التوصيل. هل ترغب في إرسال الطلب على أي حال ومشاركة موقعك مباشرة في واتساب؟");
                     if (!proceed) return; 
                     locationText = `\n📍 *Delivery Address:*\n(Will share via WhatsApp)\n`;
                 }
             }
 
             let subtotal = 0;
-            let msg = `🛒 *NEW GROCERY ORDER*\n📅 Date: ${orderDate}\n📍 Store: *${storeName}*\n🚚 Option: *${orderTypeStr}*\n------------------------\n`;
+            let msg = `🛒 *NEW GROCERY ORDER*\n📅 Date: ${orderDate}\n📍 Store: *${storeName}*\n🚚 Option: *${orderTypeStr}*\n👤 Name: *${custName}*\n📱 Mobile: *${custPhone}*\n------------------------\n`;
             
             cart.forEach((item, index) => {
                 const itemPrice = parseFloat(item.price) || 0; const total = itemPrice * item.qty; subtotal += total;
@@ -1908,6 +1950,11 @@
             });
             document.getElementById('cart-total').innerHTML = `${getSmartCurrency(globalCurrency, 'me-1')} ${subtotal.toFixed(2)}`;
             updateQuickAddButtons();
+
+            // FIX: Refresh the variant options inside the product modal if it is open!
+            if (typeof window.renderModalVariants === 'function') {
+                window.renderModalVariants();
+            }
         }
 
         function changeQty(id, change) {
@@ -2103,7 +2150,7 @@
         let lastSliderInteraction = 0;
         ['touchstart', 'touchmove', 'mousedown', 'wheel'].forEach(evt => {
             document.addEventListener(evt, (e) => {
-                if (e.target.closest('.mini-img-slider') || e.target.closest('.excel-banner-slider') || e.target.closest('#promo-slider') || e.target.closest('#modal-image-slider')) {
+                if (e.target.closest('.mini-img-slider') || e.target.closest('.excel-banner-slider') || e.target.closest('#promo-slider') || e.target.closest('#modal-image-slider') || e.target.closest('.highlight-auto-scroll')) {
                     lastSliderInteraction = Date.now();
                 }
             }, { passive: true });
@@ -2165,6 +2212,25 @@
         }
         setInterval(() => triggerAutoSwipe('.mini-img-slider'), 4000);
         setInterval(() => triggerAutoSwipe('.excel-banner-slider'), 5000);
+
+        // NEW: Auto-scroll for the Daily Fresh / Highlight grid
+        setInterval(() => {
+            if (Date.now() - lastSliderInteraction < 5000) return;
+            const isRTL = document.documentElement.dir === 'rtl';
+            document.querySelectorAll('.highlight-auto-scroll').forEach(slider => {
+                const maxScroll = slider.scrollWidth - slider.clientWidth;
+                if (maxScroll <= 0) return; // Ignore if not enough items to scroll
+                
+                let currentPos = Math.abs(slider.scrollLeft);
+                const cardWidth = slider.children[0] ? slider.children[0].offsetWidth + 12 : 200; // Calculate exact width of one card + gap
+                
+                if (currentPos >= maxScroll - 5) {
+                    slider.scrollTo({ left: 0, behavior: 'smooth' }); // Rewind to start
+                } else {
+                    slider.scrollTo({ left: isRTL ? -(currentPos + cardWidth) : (currentPos + cardWidth), behavior: 'smooth' });
+                }
+            });
+        }, 3500); // Scrolls every 3.5 seconds
 
         let carouselSwipeStartX = 0;
         document.addEventListener('touchstart', (e) => {
