@@ -1,8 +1,8 @@
 {
-  "name": "ShawarMax Menu",
-  "short_name": "ShawarMax",
-  "start_url": "/ShawarMax-Menu/index.html",
-  "scope": "/ShawarMax-Menu/",
+  "name": "My Grocery Store",
+  "short_name": "MyGroceryStore",
+  "start_url": "/MyGroceryStore/index.html",
+  "scope": "/MyGroceryStore/",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#ef4444",
