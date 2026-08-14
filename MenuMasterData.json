@@ -152,13 +152,14 @@
       "E": "Item Order Number Under Sub Category",
       "F": "Price",
       "G": "Description",
-      "H": "Calories",
+      "H": "Weight",
       "I": "Recipe",
       "J": "Today Special",
       "K": "Image",
       "L": "Video",
       "M": "Review social and Map",
-      "N": "Flash cards"
+      "N": "Flash cards",
+      "O": "Is variable"
     },
     {
       "A": "ITM001",
@@ -168,13 +169,31 @@
       "E": 1,
       "F": 7,
       "G": "Chicken wrapped in a soft tortilla with garlic sauce and fries.",
-      "H": 392,
+      "H": "1 kg",
       "I": "",
       "J": "",
       "K": "ITM001.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
+    },
+    {
+      "A": "ITM001",
+      "B": "SHAWRMA ",
+      "C": "Chicken",
+      "D": "TORTILLA CHICKEN",
+      "E": 1,
+      "F": 5,
+      "G": "Chicken wrapped in a soft tortilla with garlic sauce and fries.",
+      "H": "500g",
+      "I": "",
+      "J": "",
+      "K": "ITM001.jpg",
+      "L": "",
+      "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
+      "N": "",
+      "O": true
     },
     {
       "A": "ITM002",
@@ -184,13 +203,14 @@
       "E": 2,
       "F": 9,
       "G": "A regular Tortilla Chicken with extra chicken and generous toppings.",
-      "H": 460,
+      "H": "500g",
       "I": "",
       "J": "Today Special",
       "K": "ITM001.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM003",
@@ -200,13 +220,14 @@
       "E": 3,
       "F": 14,
       "G": "A platter of chicken shawarma, rice or fries, salad, and assorted sauces.",
-      "H": 770,
+      "H": "1 Piece",
       "I": "",
       "J": "",
       "K": "ITM003.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM004",
@@ -216,13 +237,14 @@
       "E": 4,
       "F": 23,
       "G": "An Arabic Dish with extra chicken and more generous sides.",
-      "H": 1080,
+      "H": "1 Dozen",
       "I": "",
       "J": "",
       "K": "ITM004.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM005",
@@ -232,13 +254,14 @@
       "E": 5,
       "F": 15,
       "G": "Crispy fried chicken strips, served with fries and a flavorful dipping sauce.",
-      "H": 625,
+      "H": "",
       "I": "",
       "J": "",
       "K": "ITM005.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM006",
@@ -248,13 +271,14 @@
       "E": 6,
       "F": 25,
       "G": "A special shawarma-style dish with tender chicken, flavorful fillings, and signature sauces.",
-      "H": 1023,
+      "H": "",
       "I": "",
       "J": "Today Special",
       "K": "ITM006.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM007",
@@ -264,13 +288,14 @@
       "E": 1,
       "F": 2,
       "G": "Creamy, rich cheese sauce with a smooth and delicious flavor.",
-      "H": 174,
+      "H": "",
       "I": "",
       "J": "",
       "K": "ITM010.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM008",
@@ -280,13 +305,14 @@
       "E": 1,
       "F": 4,
       "G": "A small serving of crispy golden fries, perfect as a light side.",
-      "H": 222,
+      "H": "",
       "I": "",
       "J": "",
       "K": "ITM008.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM009",
@@ -296,13 +322,14 @@
       "E": 2,
       "F": 6,
       "G": "A generous serving of crispy golden fries for a bigger portion.",
-      "H": 312,
+      "H": "",
       "I": "",
       "J": "",
       "K": "ITM008.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM010",
@@ -312,13 +339,14 @@
       "E": 3,
       "F": 10,
       "G": "Crispy fries topped with creamy, rich cheese sauce.",
-      "H": 644,
+      "H": "",
       "I": "",
       "J": "",
       "K": "ITM031.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM011",
@@ -334,7 +362,8 @@
       "K": "ITM011.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM012",
@@ -350,7 +379,8 @@
       "K": "ITM012.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM013",
@@ -366,7 +396,8 @@
       "K": "ITM013.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM014",
@@ -382,7 +413,8 @@
       "K": "ITM020.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM015",
@@ -398,7 +430,8 @@
       "K": "ITM016.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM016",
@@ -414,7 +447,8 @@
       "K": "ITM016.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM017",
@@ -430,7 +464,8 @@
       "K": "ITM017.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM018",
@@ -446,7 +481,8 @@
       "K": "ITM018.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM019",
@@ -462,7 +498,8 @@
       "K": "ITM021.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM020",
@@ -478,7 +515,8 @@
       "K": "ITM022.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM021",
@@ -494,7 +532,8 @@
       "K": "ITM023.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM022",
@@ -510,7 +549,8 @@
       "K": "ITM024.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM023",
@@ -526,7 +566,8 @@
       "K": "ITM026.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM024",
@@ -542,7 +583,8 @@
       "K": "ITM025.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM025",
@@ -558,7 +600,8 @@
       "K": "ITM027.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM026",
@@ -574,7 +617,8 @@
       "K": "ITM028.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM027",
@@ -590,7 +634,8 @@
       "K": "ITM029.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM028",
@@ -606,7 +651,8 @@
       "K": "ITM030.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     }
   ],
   "Menu-Arabic": [
@@ -618,13 +664,14 @@
       "E": "Item Order Number Under Sub Category",
       "F": "Price",
       "G": "Description",
-      "H": "Calories",
+      "H": "Weight",
       "I": "Recipe",
       "J": "Today Special",
       "K": "Image",
       "L": "Video",
       "M": "Review social and Map",
-      "N": "Flash cards"
+      "N": "Flash cards",
+      "O": "Is variable"
     },
     {
       "A": "ITM001",
@@ -634,13 +681,31 @@
       "E": 1,
       "F": 7,
       "G": "تورتيلا دجاج ملفوفة بخبز تورتيلا طري مع صوص الثوم والبطاطس المقلية.",
-      "H": 392,
+      "H": "1 kg",
       "I": "",
       "J": "",
       "K": "ITM001.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
+    },
+    {
+      "A": "ITM001",
+      "B": "شاورما",
+      "C": "دجاج",
+      "D": "تورتيلا دجاج",
+      "E": 1,
+      "F": 5,
+      "G": "تورتيلا دجاج ملفوفة بخبز تورتيلا طري مع صوص الثوم والبطاطس المقلية.",
+      "H": "500g",
+      "I": "",
+      "J": "",
+      "K": "ITM001.jpg",
+      "L": "",
+      "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
+      "N": "",
+      "O": true
     },
     {
       "A": "ITM002",
@@ -650,13 +715,14 @@
       "E": 2,
       "F": 9,
       "G": "تورتيلا دجاج عادية مع كمية إضافية من الدجاج وتغطيات أكثر.",
-      "H": 460,
+      "H": "500g",
       "I": "",
       "J": "Today Special",
       "K": "ITM001.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": true
     },
     {
       "A": "ITM003",
@@ -666,13 +732,14 @@
       "E": 3,
       "F": 14,
       "G": "طبق من شاورما الدجاج مع الأرز أو البطاطس والسلطة وتشكيلة من الصوصات.",
-      "H": 770,
+      "H": "1 Piece",
       "I": "",
       "J": "",
       "K": "ITM003.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM004",
@@ -682,13 +749,14 @@
       "E": 4,
       "F": 23,
       "G": "طبق عربي مع كمية إضافية من الدجاج وحصص جانبية أكبر.",
-      "H": 1080,
+      "H": "1 Dozen",
       "I": "",
       "J": "",
       "K": "ITM004.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM005",
@@ -698,13 +766,14 @@
       "E": 5,
       "F": 15,
       "G": "قطع دجاج مقلية ومقرمشة تُقدم مع البطاطس وصوص للتغميس.",
-      "H": 625,
+      "H": "",
       "I": "",
       "J": "",
       "K": "ITM005.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM006",
@@ -714,13 +783,14 @@
       "E": 6,
       "F": 25,
       "G": "طبق شاورما مميز مع دجاج طري وحشوات لذيذة وصوصات خاصة.",
-      "H": 1023,
+      "H": "",
       "I": "",
       "J": "Today Special",
       "K": "ITM006.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM007",
@@ -730,13 +800,14 @@
       "E": 1,
       "F": 2,
       "G": "صوص جبن كريمي وغني بقوام ناعم ومذاق لذيذ.",
-      "H": 174,
+      "H": "",
       "I": "",
       "J": "",
       "K": "ITM010.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM008",
@@ -746,13 +817,14 @@
       "E": 1,
       "F": 4,
       "G": "حصة صغيرة من البطاطس الذهبية والمقرمشة، مثالية كطبق جانبي خفيف.",
-      "H": 222,
+      "H": "",
       "I": "",
       "J": "",
       "K": "ITM008.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM009",
@@ -762,13 +834,14 @@
       "E": 2,
       "F": 6,
       "G": "حصة كبيرة من البطاطس الذهبية والمقرمشة.",
-      "H": 312,
+      "H": "",
       "I": "",
       "J": "",
       "K": "ITM008.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM010",
@@ -778,13 +851,14 @@
       "E": 3,
       "F": 10,
       "G": "بطاطس مقلية ومقرمشة مغطاة بصوص الجبن الكريمي والغني.",
-      "H": 644,
+      "H": "",
       "I": "",
       "J": "",
       "K": "ITM010.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM011",
@@ -800,7 +874,8 @@
       "K": "ITM011.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM012",
@@ -816,7 +891,8 @@
       "K": "ITM012.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM013",
@@ -832,7 +908,8 @@
       "K": "ITM013.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM014",
@@ -848,7 +925,8 @@
       "K": "ITM020.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM015",
@@ -864,7 +942,8 @@
       "K": "ITM016.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM016",
@@ -880,7 +959,8 @@
       "K": "ITM016.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM017",
@@ -896,7 +976,8 @@
       "K": "ITM017.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM018",
@@ -912,7 +993,8 @@
       "K": "ITM018.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM019",
@@ -928,7 +1010,8 @@
       "K": "ITM021.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM020",
@@ -944,7 +1027,8 @@
       "K": "ITM022.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM021",
@@ -960,7 +1044,8 @@
       "K": "ITM023.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM022",
@@ -976,7 +1061,8 @@
       "K": "ITM024.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM023",
@@ -992,7 +1078,8 @@
       "K": "ITM026.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM024",
@@ -1008,7 +1095,8 @@
       "K": "ITM025.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM025",
@@ -1024,7 +1112,8 @@
       "K": "ITM027.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM026",
@@ -1040,7 +1129,8 @@
       "K": "ITM028.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM027",
@@ -1056,7 +1146,8 @@
       "K": "ITM029.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     },
     {
       "A": "ITM028",
@@ -1072,7 +1163,8 @@
       "K": "ITM023.jpg",
       "L": "",
       "M": "https://www.instagram.com,https://maps.app.goo.gl/Sw5YC2koQuxJbZq57",
-      "N": ""
+      "N": "",
+      "O": ""
     }
   ],
   "RelatedItems": [
