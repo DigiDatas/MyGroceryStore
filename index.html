@@ -546,21 +546,15 @@
                         <span id="bill-datetime" class="text-[10px] text-gray-600 font-bold bg-white px-2 py-1 rounded border border-gray-200 shadow-sm"></span>
                     </div>
                     
-                    <!-- Dine In / Takeaway Toggle -->
+                    <!-- Delivery / Store Pickup Toggle -->
                     <div class="flex gap-2 mb-2">
-                        <button onclick="setDiningType('Takeaway')" id="btn-type-takeaway" class="flex-1 py-2 rounded-lg border-2 border-green-500 bg-green-50 text-green-700 font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm">
-                            <i class="fas fa-shopping-bag"></i> Takeaway
+                        <button onclick="setFulfillmentType('Delivery')" id="btn-type-delivery" class="flex-1 py-2 rounded-lg border-2 border-green-500 bg-green-50 text-green-700 font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fas fa-motorcycle"></i> Home Delivery
                         </button>
                         
-                        <!-- DISABLED FOR NOW: Delete the style="display: none !important;" to turn this back on later! -->
-                        <button onclick="setDiningType('Dine In')" id="btn-type-dinein" style="display: none !important;" class="flex-1 py-2 rounded-lg border-2 border-gray-200 bg-white text-gray-500 font-bold text-sm transition-all flex items-center justify-center gap-2 hover:bg-gray-50">
-                            <i class="fas fa-utensils"></i> Dine In
+                        <button onclick="setFulfillmentType('Pickup')" id="btn-type-pickup" class="flex-1 py-2 rounded-lg border-2 border-gray-200 bg-white text-gray-500 font-bold text-sm transition-all flex items-center justify-center gap-2 hover:bg-gray-50">
+                            <i class="fas fa-store"></i> Store Pickup
                         </button>
-                    </div>
-
-                    <div id="table-select-container" class="hidden transition-all duration-300 mt-2">
-                        <div class="text-[10px] font-bold text-gray-400 uppercase mb-2 text-center flex items-center gap-2 before:h-px before:flex-1 before:bg-gray-200 after:h-px after:flex-1 after:bg-gray-200">Select Table</div>
-                        <div id="table-grid" class="flex overflow-x-auto gap-1.5 pb-2 snap-x hide-scrollbar"></div>
                     </div>
 
                     <div id="address-input-container" class="transition-all duration-300 mt-2">
@@ -655,8 +649,8 @@
         let isGameTriggerEnabled = false;
 
         const staticText = {
-            en: { search: 'Search menu...', empty: 'No items found.', calories: 'Calories', recipe: 'Recipe / Ingredients', video: 'Watch Video', call: 'Call to Order', wa: 'WhatsApp', share: 'Share', contact: 'Contact Us', location: 'Location', deliveryPrefix: 'Delivery Charge:', todaySpecial: '🌟 Today\'s Specials', all: 'All', specialBadge: "Today's Special" },
-            ar: { search: 'ابحث في القائمة...', empty: 'لم يتم العثور على عناصر.', calories: 'سعرة حرارية', recipe: 'الوصفة / المكونات', video: 'شاهد الفيديو', call: 'اتصل للطلب', wa: 'واتساب', share: 'مشاركة', contact: 'اتصل بنا', location: 'الموقع', deliveryPrefix: 'رسوم التوصيل:', todaySpecial: '🌟 أطباق اليوم المميزة', all: 'الكل', specialBadge: "طبق اليوم" }
+            en: { search: 'Search store...', empty: 'No items found.', calories: 'Size/Unit', recipe: 'Nutrition / Ingredients', video: 'Watch Video', call: 'Call to Order', wa: 'WhatsApp', share: 'Share', contact: 'Contact Us', location: 'Location', deliveryPrefix: 'Delivery Charge:', todaySpecial: '🌟 Daily Fresh Offers', all: 'All', specialBadge: "Fresh Offer" },
+            ar: { search: 'ابحث في المتجر...', empty: 'لم يتم العثور على عناصر.', calories: 'الحجم/الوحدة', recipe: 'المعلومات الغذائية / المكونات', video: 'شاهد الفيديو', call: 'اتصل للطلب', wa: 'واتساب', share: 'مشاركة', contact: 'اتصل بنا', location: 'الموقع', deliveryPrefix: 'رسوم التوصيل:', todaySpecial: '🌟 عروض اليوم الطازجة', all: 'الكل', specialBadge: "عرض طازج" }
         };
 
         async function init() {
@@ -937,13 +931,15 @@
             activeMenuData = [];
             mainCategories = [];
             allSubCategories = []; 
-            const subCatGroups = {};
+            let childrenRows = [];
 
             rawSource.forEach(row => {
                 if(!row.B || !row.D) return;
 
                 const safeId = row.A ? String(row.A).trim() : 'item-' + Math.random().toString(36).substr(2, 9);
-                const brandLogo = rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/logo.png';
+                const isVar = String(row.O || "").trim().toLowerCase();
+                const isChild = isVar === 'true' || isVar === 'yes';
+                const brandLogo = rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/logo.png';
 
                 const item = {
                     id: safeId,
@@ -951,11 +947,12 @@
                     subCat: String(row.C || "Other").trim(),
                     name: String(row.D).trim(),
                     order: parseInt(row.E) || 999, 
-                    price: row.F || 0,
+                    price: parseFloat(row.F) || 0,
                     desc: row.G || "",
                     calories: row.H || "",
                     recipe: row.I || "",
                     isTodaySpecial: String(row.J || "").trim().toLowerCase() === 'today special',
+                    variants: [],
                     imgUrls: (() => {
                         let urls = [];
                         const v = "?v=" + new Date().getTime(); 
@@ -983,9 +980,36 @@
                     flashCards: row.N || "" 
                 };
 
-                activeMenuData.push(item);
-                if(!mainCategories.includes(item.mainCat)) mainCategories.push(item.mainCat);
-                if(!allSubCategories.includes(item.subCat)) allSubCategories.push(item.subCat);
+                if (isChild) {
+                    childrenRows.push(item);
+                } else {
+                    activeMenuData.push(item);
+                    if(!mainCategories.includes(item.mainCat)) mainCategories.push(item.mainCat);
+                    if(!allSubCategories.includes(item.subCat)) allSubCategories.push(item.subCat);
+                }
+            });
+
+            // Link children to their parent
+            childrenRows.forEach(child => {
+                const parent = activeMenuData.find(p => String(p.id) === String(child.id));
+                if (parent) {
+                    if (parent.variants.length === 0) {
+                        // Push the parent itself as the first variant option
+                        parent.variants.push({
+                            variantId: parent.id + '-default',
+                            name: parent.name,
+                            price: parent.price,
+                            size: parent.calories
+                        });
+                    }
+                    // Push the child variant
+                    parent.variants.push({
+                        variantId: child.id + '-' + Math.random().toString(36).substr(2, 5),
+                        name: child.name,
+                        price: child.price,
+                        size: child.calories
+                    });
+                }
             });
 
             renderCategoryFilters();
@@ -996,19 +1020,16 @@
 
         function getCategoryIcon(catName) {
             const lower = catName.toLowerCase();
-            if(lower.includes('burger') || lower.includes('برجر')) return 'fa-hamburger';
-            if(lower.includes('pizza') || lower.includes('بيتزا')) return 'fa-pizza-slice';
-            if(lower.includes('drink') || lower.includes('beverage') || lower.includes('مشروب') || lower.includes('عصير')) return 'fa-glass-cheers';
-            if(lower.includes('salad') || lower.includes('سلطة')) return 'fa-leaf';
-            if(lower.includes('dessert') || lower.includes('sweet') || lower.includes('حلوى') || lower.includes('حلى')) return 'fa-ice-cream';
-            if(lower.includes('coffee') || lower.includes('قهوة') || lower.includes('كافيه')) return 'fa-coffee';
-            if(lower.includes('chicken') || lower.includes('دجاج') || lower.includes('فراخ')) return 'fa-drumstick-bite';
-            if(lower.includes('fish') || lower.includes('seafood') || lower.includes('سمك') || lower.includes('بحري')) return 'fa-fish';
-            if(lower.includes('sandwich') || lower.includes('ساندوتش')) return 'fa-hotdog';
-            if(lower.includes('soup') || lower.includes('شوربة')) return 'fa-mug-hot';
-            if(lower.includes('breakfast') || lower.includes('فطور') || lower.includes('افطار')) return 'fa-egg';
-            if(lower.includes('meat') || lower.includes('لحم') || lower.includes('ستيك')) return 'fa-bacon';
-            return 'fa-utensils'; 
+            if(lower.includes('produce') || lower.includes('fresh') || lower.includes('خضار') || lower.includes('فواكه')) return 'fa-apple-alt';
+            if(lower.includes('dairy') || lower.includes('milk') || lower.includes('ألبان') || lower.includes('حليب')) return 'fa-cheese';
+            if(lower.includes('bakery') || lower.includes('bread') || lower.includes('مخبوزات') || lower.includes('خبز')) return 'fa-bread-slice';
+            if(lower.includes('meat') || lower.includes('لحوم') || lower.includes('دجاج')) return 'fa-drumstick-bite';
+            if(lower.includes('seafood') || lower.includes('fish') || lower.includes('أسماك') || lower.includes('بحريات')) return 'fa-fish';
+            if(lower.includes('drink') || lower.includes('beverage') || lower.includes('مشروب') || lower.includes('عصير')) return 'fa-bottle-water';
+            if(lower.includes('snack') || lower.includes('تسالي') || lower.includes('سناك')) return 'fa-cookie';
+            if(lower.includes('pantry') || lower.includes('grocery') || lower.includes('بقالة') || lower.includes('معلبات')) return 'fa-box-open';
+            if(lower.includes('household') || lower.includes('cleaning') || lower.includes('منظفات')) return 'fa-spray-can';
+            return 'fa-shopping-basket'; 
         }
 
         function renderCategoryFilters() {
@@ -1305,10 +1326,11 @@
                         </div>
                         <p class="text-xs text-gray-500 line-clamp-2 mt-1 mb-2 flex-grow">${item.desc}</p>
                         <div class="flex justify-between items-end mt-1">
-                            ${item.calories ? `<div class="flex items-center gap-1 text-[10px] sm:text-xs font-bold text-orange-500 bg-orange-50 w-fit px-2 py-1 rounded-md"><i class="fas fa-fire"></i> ${item.calories} Cal</div>` : '<div></div>'}
-                            <button onclick="event.stopPropagation(); toggleQuickCart('${item.id}')" class="quick-add-btn-${item.id} bg-orange-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-colors duration-300">
-                                <i class="quick-add-icon-${item.id} fas fa-plus text-sm transition-transform duration-500"></i>
-                            </button>
+                            ${item.calories ? `<div class="flex items-center gap-1 text-[10px] sm:text-xs font-bold text-green-600 bg-green-50 w-fit px-2 py-1 rounded-md"><i class="fas fa-weight-hanging"></i> ${item.calories}</div>` : '<div></div>'}
+                            ${item.variants && item.variants.length > 0 
+                                ? `<button onclick="event.stopPropagation(); openModal('${item.id}')" class="bg-green-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-md hover:bg-green-600 transition-colors pointer-events-auto">Options</button>` 
+                                : `<div class="stepper-container-${item.id} flex items-center h-8" onclick="event.stopPropagation();"></div>`
+                            }
                         </div>
                     </div>
                 `;
@@ -1381,7 +1403,53 @@
             if(item.calories) { document.getElementById('modalCalories').textContent = item.calories; document.getElementById('modalCalories').parentElement.classList.remove('hidden'); document.getElementById('modalCalories').parentElement.classList.add('inline-flex'); } 
             else { document.getElementById('modalCalories').parentElement.classList.add('hidden'); document.getElementById('modalCalories').parentElement.classList.remove('inline-flex'); }
 
+            const oldVariantArea = document.getElementById('modalVariantArea');
+            if (oldVariantArea) oldVariantArea.remove();
+            
             const recipeArea = document.getElementById('modalRecipeArea');
+            
+            if (item.variants && item.variants.length > 0) {
+                let variantHtml = `<div id="modalVariantArea" class="mb-4 bg-gray-50 p-3 rounded-xl border border-gray-200">
+                    <h4 class="font-bold text-sm text-gray-800 mb-2">Select Size / Option:</h4>
+                    <div class="flex flex-col gap-2" id="variant-list-container"></div>
+                </div>`;
+                
+                recipeArea.insertAdjacentHTML('beforebegin', variantHtml);
+                
+                window.renderModalVariants = function() {
+                    const listContainer = document.getElementById('variant-list-container');
+                    if(!listContainer) return;
+                    listContainer.innerHTML = '';
+                    
+                    item.variants.forEach(v => {
+                        const cartItem = cart.find(c => c.id === v.variantId);
+                        const qty = cartItem ? cartItem.qty : 0;
+                        listContainer.innerHTML += `
+                            <div class="flex justify-between items-center bg-white p-2 rounded-lg border ${qty > 0 ? 'border-green-500' : 'border-gray-200'}">
+                                <div>
+                                    <div class="font-bold text-sm text-gray-900">${v.size || v.name}</div>
+                                    <div class="text-xs text-red-500 font-bold">${v.price} ${globalCurrency}</div>
+                                </div>
+                                <div class="flex items-center h-8">
+                                    ${qty > 0 ? `
+                                        <div class="flex items-center bg-green-50 rounded-full border border-green-500 overflow-hidden shadow-sm h-full">
+                                            <button onclick="changeQty('${v.variantId}', -1); window.renderModalVariants();" class="w-8 h-full flex items-center justify-center text-green-700 hover:bg-green-200 transition"><i class="fas ${qty === 1 ? 'fa-trash-alt text-[10px]' : 'fa-minus text-xs'}"></i></button>
+                                            <span class="font-bold text-sm w-4 text-center text-green-800">${qty}</span>
+                                            <button onclick="changeQty('${v.variantId}', 1); window.renderModalVariants();" class="w-8 h-full flex items-center justify-center text-green-700 hover:bg-green-200 transition"><i class="fas fa-plus text-xs"></i></button>
+                                        </div>
+                                    ` : `
+                                        <button onclick="addVariantToCart('${item.id}', '${v.variantId}'); window.renderModalVariants();" class="bg-green-500 text-white px-4 h-full rounded-full text-xs font-bold shadow-md hover:bg-green-600 transition">Add</button>
+                                    `}
+                                </div>
+                            </div>
+                        `;
+                    });
+                };
+                window.renderModalVariants();
+                document.getElementById('modal-cart-btn').style.display = 'none'; // Hide generic cart button
+            } else {
+                document.getElementById('modal-cart-btn').style.display = 'flex'; // Show generic cart button
+            }
             if(item.recipe) {
                 document.getElementById('modalRecipe').textContent = item.recipe; recipeArea.classList.remove('hidden'); window.toggleRecipe(true); 
                 setTimeout(() => {
@@ -1521,14 +1589,13 @@
         function sendOrderViaWhatsApp() {
             if(cart.length === 0 || !rawBranding.D) return;
             
-            const restaurantName = rawBranding.B || 'Our Restaurant';
+            const storeName = rawBranding.B || 'My Grocery Store';
             const orderDate = new Date().toLocaleString('en-US', { day: '2-digit', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit' });
             
-            let orderTypeStr = diningType; let locationText = "";
-            if (diningType === 'Dine In') {
-                if (!selectedTable) { alert('Please select a table number from the list!'); return; }
-                orderTypeStr = `Dine In (${selectedTable})`;
-            } else if (diningType === 'Takeaway') {
+            let orderTypeStr = fulfillmentType; let locationText = "";
+            if (fulfillmentType === 'Pickup') {
+                orderTypeStr = `Store Pickup`;
+            } else if (fulfillmentType === 'Delivery') {
                 const addressInput = document.getElementById('delivery-address').value.trim();
                 if (addressInput) { locationText = `\n📍 *Delivery Address:*\n${addressInput}\n`; } 
                 else {
@@ -1539,7 +1606,7 @@
             }
 
             let subtotal = 0;
-            let msg = `🧾 *NEW ORDER*\n📅 Date: ${orderDate}\n📍 Store: *${restaurantName}*\n🍽️ Option: *${orderTypeStr}*\n------------------------\n`;
+            let msg = `🛒 *NEW GROCERY ORDER*\n📅 Date: ${orderDate}\n📍 Store: *${storeName}*\n🚚 Option: *${orderTypeStr}*\n------------------------\n`;
             
             cart.forEach((item, index) => {
                 const itemPrice = parseFloat(item.price) || 0; const total = itemPrice * item.qty; subtotal += total;
@@ -1685,46 +1752,24 @@
         }
 
         let cart = [];
-        let diningType = 'Takeaway'; 
-        let selectedTable = '';
+        let fulfillmentType = 'Delivery'; 
 
-        function initTableSelect() {
-            const grid = document.getElementById('table-grid'); grid.innerHTML = '';
-            for(let i = 1; i <= 20; i++) {
-                const formattedNum = String(i).padStart(2, '0'); const tableLabel = `T${formattedNum}`; 
-                grid.innerHTML += `<button onclick="selectTableNumber('${i}')" id="btn-table-num-${i}" class="w-10 h-10 shrink-0 snap-start rounded-lg border-2 border-gray-200 bg-white text-gray-500 font-bold text-xs hover:border-green-300 transition-all flex items-center justify-center">${tableLabel}</button>`;
-            }
-        }
+        function setFulfillmentType(type) {
+            fulfillmentType = type;
+            const btnDelivery = document.getElementById('btn-type-delivery'); 
+            const btnPickup = document.getElementById('btn-type-pickup');
+            const addressContainer = document.getElementById('address-input-container');
 
-        function selectTableNumber(num) {
-            const formattedNum = String(num).padStart(2, '0'); selectedTable = `T${formattedNum}`; 
-            for(let i = 1; i <= 20; i++) {
-                const btn = document.getElementById(`btn-table-num-${i}`);
-                if(btn) btn.className = "w-10 h-10 shrink-0 snap-start rounded-lg border-2 border-gray-200 bg-white text-gray-500 font-bold text-xs hover:border-green-300 transition-all flex items-center justify-center";
-            }
-            const activeBtn = document.getElementById(`btn-table-num-${num}`);
-            if(activeBtn) { activeBtn.className = "w-10 h-10 shrink-0 snap-start rounded-lg border-2 border-green-500 bg-green-50 text-green-700 font-bold text-xs transition-all shadow-sm scale-110 flex items-center justify-center"; }
-        }
-
-        function setDiningType(type) {
-            diningType = type;
-            const btnTakeaway = document.getElementById('btn-type-takeaway'); const btnDineIn = document.getElementById('btn-type-dinein');
-            const tableContainer = document.getElementById('table-select-container'); const addressContainer = document.getElementById('address-input-container');
-
-            if(type === 'Takeaway') {
-                btnTakeaway.className = "flex-1 py-2 rounded-lg border-2 border-green-500 bg-green-50 text-green-700 font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm";
-                btnDineIn.className = "flex-1 py-2 rounded-lg border-2 border-gray-200 bg-white text-gray-500 font-bold text-sm transition-all flex items-center justify-center gap-2 hover:bg-gray-50";
-                if(tableContainer) tableContainer.classList.add('hidden'); 
+            if(type === 'Delivery') {
+                btnDelivery.className = "flex-1 py-2 rounded-lg border-2 border-green-500 bg-green-50 text-green-700 font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm";
+                btnPickup.className = "flex-1 py-2 rounded-lg border-2 border-gray-200 bg-white text-gray-500 font-bold text-sm transition-all flex items-center justify-center gap-2 hover:bg-gray-50";
                 if(addressContainer) addressContainer.classList.remove('hidden');
             } else {
-                btnDineIn.className = "flex-1 py-2 rounded-lg border-2 border-green-500 bg-green-50 text-green-700 font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm";
-                btnTakeaway.className = "flex-1 py-2 rounded-lg border-2 border-gray-200 bg-white text-gray-500 font-bold text-sm transition-all flex items-center justify-center gap-2 hover:bg-gray-50";
-                if(tableContainer) tableContainer.classList.remove('hidden'); 
+                btnPickup.className = "flex-1 py-2 rounded-lg border-2 border-green-500 bg-green-50 text-green-700 font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm";
+                btnDelivery.className = "flex-1 py-2 rounded-lg border-2 border-gray-200 bg-white text-gray-500 font-bold text-sm transition-all flex items-center justify-center gap-2 hover:bg-gray-50";
                 if(addressContainer) addressContainer.classList.add('hidden');
             }
         }
-
-        setTimeout(() => { initTableSelect(); setupDraggable('table-grid'); }, 500);
       
         function addToCart() {
             if(!currentOpenItemId) return; const item = activeMenuData.find(i => i.id === currentOpenItemId); if(!item) return;
@@ -1745,19 +1790,27 @@
 
         function updateQuickAddButtons() {
             activeMenuData.forEach(item => {
-                const btns = document.querySelectorAll(`.quick-add-btn-${item.id}`);
-                const icons = document.querySelectorAll(`.quick-add-icon-${item.id}`);
-                const isInCart = cart.some(c => String(c.id) === String(item.id));
+                if (item.variants && item.variants.length > 0) return; // Skip updating stepper for variable items
                 
-                btns.forEach(btn => {
-                    btn.className = isInCart 
-                        ? `quick-add-btn-${item.id} bg-red-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md hover:bg-red-600 hover:scale-110 transition-colors duration-300`
-                        : `quick-add-btn-${item.id} bg-orange-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md hover:bg-orange-600 hover:scale-110 transition-colors duration-300 z-10 relative pointer-events-auto`;
-                });
-                icons.forEach(icon => {
-                    icon.className = isInCart
-                        ? `quick-add-icon-${item.id} fas fa-minus text-sm transition-transform duration-500 rotate-180 pointer-events-none`
-                        : `quick-add-icon-${item.id} fas fa-plus text-[10px] sm:text-sm transition-transform duration-500 rotate-0 pointer-events-none`;
+                const containers = document.querySelectorAll(`.stepper-container-${item.id}`);
+                const cartItem = cart.find(c => String(c.id) === String(item.id));
+                
+                containers.forEach(container => {
+                    if (cartItem) {
+                        container.innerHTML = `
+                            <div class="flex items-center bg-green-50 rounded-full border border-green-500 overflow-hidden shadow-sm h-full pointer-events-auto">
+                                <button onclick="changeQty('${item.id}', -1)" class="w-8 h-full flex items-center justify-center text-green-700 hover:bg-green-200 transition"><i class="fas ${cartItem.qty === 1 ? 'fa-trash-alt text-[10px]' : 'fa-minus text-xs'}"></i></button>
+                                <span class="font-bold text-sm w-4 text-center text-green-800">${cartItem.qty}</span>
+                                <button onclick="changeQty('${item.id}', 1)" class="w-8 h-full flex items-center justify-center text-green-700 hover:bg-green-200 transition"><i class="fas fa-plus text-xs"></i></button>
+                            </div>
+                        `;
+                    } else {
+                        container.innerHTML = `
+                            <button onclick="toggleQuickCart('${item.id}')" class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md hover:bg-green-600 hover:scale-110 transition-all duration-300 pointer-events-auto">
+                                <i class="fas fa-plus text-sm pointer-events-none"></i>
+                            </button>
+                        `;
+                    }
                 });
             });
 
@@ -1768,7 +1821,7 @@
                     modalCartBtn.className = "flex-1 bg-red-500 text-white text-center py-3 rounded-xl font-bold hover:bg-red-600 transition-all duration-300 shadow-md flex items-center justify-center gap-2";
                     modalCartIcon.className = "fas fa-trash-alt text-lg"; modalCartText.innerText = "Remove from Cart";
                 } else {
-                    modalCartBtn.className = "flex-1 bg-orange-500 text-white text-center py-3 rounded-xl font-bold hover:bg-orange-600 transition-all duration-300 shadow-md flex items-center justify-center gap-2";
+                    modalCartBtn.className = "flex-1 bg-green-500 text-white text-center py-3 rounded-xl font-bold hover:bg-green-600 transition-all duration-300 shadow-md flex items-center justify-center gap-2";
                     modalCartIcon.className = "fas fa-cart-plus text-lg"; modalCartText.innerText = "Add to Cart";
                 }
             }
@@ -1826,6 +1879,22 @@
         function closeCartModal() {
             const modal = document.getElementById('cartModal'); modal.classList.remove('flex'); modal.classList.add('hidden'); document.body.style.overflow = '';
         }
+
+        window.addVariantToCart = function(parentId, variantId) {
+            const parentItem = activeMenuData.find(i => String(i.id) === String(parentId));
+            if (!parentItem) return;
+            const variant = parentItem.variants.find(v => v.variantId === variantId);
+            if (!variant) return;
+            
+            cart.push({ 
+                ...parentItem, 
+                id: variant.variantId, // Override ID so the cart separates the sizes
+                name: parentItem.name + ' (' + (variant.size || variant.name) + ')', // Format: "Water (1L)"
+                price: variant.price, 
+                qty: 1 
+            });
+            updateCartUI();
+        };
 
         function getGPSLocation() {
             if (navigator.geolocation) {
