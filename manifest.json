@@ -1,0 +1,21 @@
+{
+  "name": "ShawarMax Menu",
+  "short_name": "ShawarMax",
+  "start_url": "/ShawarMax-Menu/index.html",
+  "scope": "/ShawarMax-Menu/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#ef4444",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
