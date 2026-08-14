@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shawarmax Menu</title>
-  <link rel="manifest" href="https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/manifest.json">
+  <link rel="manifest" href="https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/manifest.json">
     <meta name="theme-color" content="#ef4444">
     <link rel="apple-touch-icon" href="logo.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -661,7 +661,7 @@
 
         async function init() {
             try {
-                const fileUrl = "https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/MenuMasterData.json?v=" + new Date().getTime();
+                const fileUrl = "https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/MenuMasterData.json?v=" + new Date().getTime();
                 const response = await fetch(fileUrl, { cache: "no-store", pragma: "no-cache" });
                 if (!response.ok) throw new Error("Could not fetch JSON file");
                 
@@ -943,7 +943,7 @@
                 if(!row.B || !row.D) return;
 
                 const safeId = row.A ? String(row.A).trim() : 'item-' + Math.random().toString(36).substr(2, 9);
-                const brandLogo = rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/logo.png';
+                const brandLogo = rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/logo.png';
 
                 const item = {
                     id: safeId,
@@ -963,7 +963,7 @@
                             urls = String(row.K).split(',').map(u => {
                                 let clean = u.trim();
                                 if (!clean) return null;
-                                if (!clean.startsWith('http')) return `https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/images/ItemImages/${clean}${clean.includes('?') ? '' : v}`;
+                                if (!clean.startsWith('http')) return `https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/images/ItemImages/${clean}${clean.includes('?') ? '' : v}`;
                                 return clean;
                             }).filter(u => u !== null);
                         } else {
@@ -974,7 +974,7 @@
                     img: (() => {
                         if (row.K) {
                             let first = String(row.K).split(',')[0].trim();
-                            return first.startsWith('http') ? first : `https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/images/ItemImages/${first}`;
+                            return first.startsWith('http') ? first : `https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/images/ItemImages/${first}`;
                         }
                         return brandLogo;
                     })(),
@@ -1223,7 +1223,7 @@
                     if (cellValue) {
                         const bannerUrls = String(cellValue).split(',').map(u => {
                             let clean = u.trim(); if (!clean) return null;
-                            if (!clean.startsWith('http')) { return `https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/images/banner/${clean}`; }
+                            if (!clean.startsWith('http')) { return `https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/images/banner/${clean}`; }
                             return clean; 
                         }).filter(u => u !== null);
 
@@ -1285,7 +1285,7 @@
                 else if(item.video) badgeHtml = `<div class="absolute top-2 end-2 bg-black/70 backdrop-blur px-2 py-1 rounded-lg text-[10px] sm:text-xs font-bold text-white shadow-sm flex items-center gap-1 z-10"><i class="fas fa-play"></i> Video</div>`;
 
                 const urls = item.imgUrls || [item.img]; let imagesHtml = '';
-                urls.forEach(url => { imagesHtml += `<img src="${url}" alt="Image" class="w-full h-full object-cover shrink-0 snap-center group-hover:scale-105 transition-transform duration-500" onerror="if(this.src.includes('.jpg')) { this.src=this.src.replace('.jpg', '.png'); } else if(this.src.includes('.png')) { this.src=this.src.replace('.png', '.jpeg'); } else { if(this.parentElement && this.parentElement.children.length > 1) { this.remove(); } else { this.onerror=null; this.classList.replace('object-cover', 'object-contain'); this.classList.add('p-4'); this.src='${rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/logo.png'}'; } }">`; });
+                urls.forEach(url => { imagesHtml += `<img src="${url}" alt="Image" class="w-full h-full object-cover shrink-0 snap-center group-hover:scale-105 transition-transform duration-500" onerror="if(this.src.includes('.jpg')) { this.src=this.src.replace('.jpg', '.png'); } else if(this.src.includes('.png')) { this.src=this.src.replace('.png', '.jpeg'); } else { if(this.parentElement && this.parentElement.children.length > 1) { this.remove(); } else { this.onerror=null; this.classList.replace('object-cover', 'object-contain'); this.classList.add('p-4'); this.src='${rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/logo.png'}'; } }">`; });
                 if (urls.length > 1) { imagesHtml += `<img src="${urls[0]}" data-is-clone="true" alt="Image Clone" class="w-full h-full object-cover shrink-0 snap-center group-hover:scale-105 transition-transform duration-500">`; }
 
                 card.innerHTML = `
@@ -1328,7 +1328,7 @@
 
             const urls = item.imgUrls || [item.img];
             urls.forEach((url, i) => {
-                const imgHtml = `<img src="${url}" class="w-full h-full object-cover shrink-0 snap-center" onerror="if(this.src.includes('.jpg')) { this.src=this.src.replace('.jpg', '.png'); } else if(this.src.includes('.png')) { this.src=this.src.replace('.png', '.jpeg'); } else { if(this.parentElement && this.parentElement.children.length > 1) { this.remove(); let d = document.getElementById('dot-${i}'); if(d) d.remove(); } else { this.onerror=null; this.classList.replace('object-cover', 'object-contain'); this.classList.add('p-8'); this.src='${rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/logo.png'}'; } }">`;
+                const imgHtml = `<img src="${url}" class="w-full h-full object-cover shrink-0 snap-center" onerror="if(this.src.includes('.jpg')) { this.src=this.src.replace('.jpg', '.png'); } else if(this.src.includes('.png')) { this.src=this.src.replace('.png', '.jpeg'); } else { if(this.parentElement && this.parentElement.children.length > 1) { this.remove(); let d = document.getElementById('dot-${i}'); if(d) d.remove(); } else { this.onerror=null; this.classList.replace('object-cover', 'object-contain'); this.classList.add('p-8'); this.src='${rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/logo.png'}'; } }">`;
                 slider.insertAdjacentHTML('beforeend', imgHtml);
                 dots.insertAdjacentHTML('beforeend', `<div id="dot-${i}" class="modal-dot w-2 h-2 rounded-full transition-all duration-300 ${i===0 ? 'bg-red-500 scale-125' : 'bg-white/80 shadow-sm'}"></div>`);
             });
@@ -1442,7 +1442,7 @@
                         relatedSlider.innerHTML += `
                             <div class="relative w-[28vw] sm:w-[110px] flex-shrink-0 snap-start bg-orange-50 border border-orange-100 rounded-xl p-2 shadow-sm cursor-pointer hover:shadow-md transition-shadow group">
                                 <div onclick="openModal('${relItem.id}')">
-                                    <img src="${relItem.img}" class="w-full h-16 object-cover rounded-lg mb-1.5 pointer-events-none" onerror="if(this.src.includes('.jpg')) { this.src=this.src.replace('.jpg', '.png'); } else if(this.src.includes('.png')) { this.src=this.src.replace('.png', '.jpeg'); } else { this.onerror=null; this.src='${rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/logo.png'}'; }">
+                                    <img src="${relItem.img}" class="w-full h-16 object-cover rounded-lg mb-1.5 pointer-events-none" onerror="if(this.src.includes('.jpg')) { this.src=this.src.replace('.jpg', '.png'); } else if(this.src.includes('.png')) { this.src=this.src.replace('.png', '.jpeg'); } else { this.onerror=null; this.src='${rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/logo.png'}'; }">
                                     <h4 class="text-[10px] font-bold text-gray-800 line-clamp-1 pointer-events-none">${relItem.name}</h4>
                                 </div>
                                 <div class="flex justify-between items-center mt-1 pointer-events-none">
@@ -1785,7 +1785,7 @@
                 const itemPrice = parseFloat(item.price) || 0; const itemTotal = itemPrice * item.qty; subtotal += itemTotal;
                 container.innerHTML += `
                     <div class="flex items-center gap-2 bg-white p-2 rounded-lg mb-2 shadow-sm border border-gray-100">
-                        <img src="${item.img}" class="w-12 h-12 rounded-md object-cover bg-gray-100 shrink-0" onerror="if(this.src.includes('.jpg')) { this.src=this.src.replace('.jpg', '.png'); } else if(this.src.includes('.png')) { this.src=this.src.replace('.png', '.jpeg'); } else { this.onerror=null; this.src='${rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/logo.png'}'; }">
+                        <img src="${item.img}" class="w-12 h-12 rounded-md object-cover bg-gray-100 shrink-0" onerror="if(this.src.includes('.jpg')) { this.src=this.src.replace('.jpg', '.png'); } else if(this.src.includes('.png')) { this.src=this.src.replace('.png', '.jpeg'); } else { this.onerror=null; this.src='${rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/logo.png'}'; }">
 
                         <div class="flex-grow min-w-0">
                             <h4 class="font-bold text-gray-800 text-xs leading-tight truncate">${item.name}</h4>
@@ -1857,7 +1857,7 @@
                 if(item.isTodaySpecial) badgeHtml = `<div class="absolute top-2 end-2 bg-gradient-to-r from-orange-400 to-red-500 px-2 py-1 rounded-lg text-[8px] sm:text-[10px] font-bold text-white shadow-sm z-10"><i class="fas fa-star text-[8px]"></i> Special</div>`;
                 else if(item.video) badgeHtml = `<div class="absolute top-2 end-2 bg-black/70 backdrop-blur px-2 py-1 rounded-lg text-[8px] sm:text-[10px] font-bold text-white shadow-sm flex items-center gap-1 z-10"><i class="fas fa-play"></i> Video</div>`;
                 const urls = item.imgUrls || [item.img]; let imagesHtml = '';
-                urls.forEach(url => { imagesHtml += `<img src="${url}" loading="lazy" alt="Image" class="w-full h-full object-cover shrink-0 snap-center group-hover:scale-105 transition-transform duration-500" onerror="if(this.src.includes('.jpg')) { this.src=this.src.replace('.jpg', '.png'); } else if(this.src.includes('.png')) { this.src=this.src.replace('.png', '.jpeg'); } else { if(this.parentElement && this.parentElement.children.length > 1) { this.remove(); } else { this.onerror=null; this.classList.replace('object-cover', 'object-contain'); this.classList.add('p-4'); this.src='${rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/logo.png'}'; } }">`; });
+                urls.forEach(url => { imagesHtml += `<img src="${url}" loading="lazy" alt="Image" class="w-full h-full object-cover shrink-0 snap-center group-hover:scale-105 transition-transform duration-500" onerror="if(this.src.includes('.jpg')) { this.src=this.src.replace('.jpg', '.png'); } else if(this.src.includes('.png')) { this.src=this.src.replace('.png', '.jpeg'); } else { if(this.parentElement && this.parentElement.children.length > 1) { this.remove(); } else { this.onerror=null; this.classList.replace('object-cover', 'object-contain'); this.classList.add('p-4'); this.src='${rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/logo.png'}'; } }">`; });
                 card.innerHTML = `
                     <button onclick="toggleLike(event, '${item.id}')" class="absolute top-2 start-2 w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors shadow-sm z-20 text-xs"><i class="${isLiked ? 'fas text-red-500' : 'far'} fa-heart"></i></button>
                     <div class="relative aspect-[4/3] overflow-hidden shrink-0 bg-gray-100 rounded-t-2xl"><div class="mini-img-slider flex w-full h-full overflow-x-auto snap-x snap-mandatory hide-scrollbar" style="scroll-behavior: smooth;" data-img-count="${urls.length}">${imagesHtml}</div>${badgeHtml}</div>
@@ -1921,7 +1921,7 @@
                     files.forEach(file => { if (file.startsWith('http')) validFlashCards.push(file); });
                 }
             });
-            const baseUrl = 'https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/images/FlashCard/FlashCard';
+            const baseUrl = 'https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/images/FlashCard/FlashCard';
             for (let i = 1; i <= 15; i++) { probeImageExtensions(`${baseUrl}${String(i).padStart(2, '0')}`); }
             buildPromo();
         }
@@ -2086,7 +2086,7 @@
         });
 
         function openBrandModal() {
-            const img = document.getElementById('brandModalImage'); img.src = rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/logo.png'; 
+            const img = document.getElementById('brandModalImage'); img.src = rawBranding.smartLogo || 'https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/logo.png'; 
             document.getElementById('brandModalTitle').textContent = rawBranding.B || "Our Restaurant";
             const defaultDescEn = "Welcome to our restaurant! We pride ourselves on serving delicious, high-quality food made with fresh ingredients and authentic recipes.";
             const defaultDescAr = "مرحباً بكم في مطعمنا! نفخر بتقديم أشهى المأكولات عالية الجودة المحضرة بمكونات طازجة ووصفات أصيلة.";
@@ -2169,7 +2169,7 @@
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('https://raw.githubusercontent.com/DigiDatas/ShawarMax-Menu/main/sw.js')
+                navigator.serviceWorker.register('https://raw.githubusercontent.com/DigiDatas/MyGroceryStore/main/sw.js')
                     .then(reg => {
                         console.log('PWA Service Worker registered successfully!'); reg.update();
                         reg.onupdatefound = () => {
