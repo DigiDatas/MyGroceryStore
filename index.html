@@ -30,6 +30,16 @@
         
         body { background-color: #f8fafc; }
 
+        /* Shake Animation for Invalid Inputs */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .animate-shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
@@ -565,8 +575,10 @@
                     <div id="customer-details-container" class="transition-all duration-300 mt-3 space-y-2">
                         <div class="text-[10px] font-bold text-gray-400 uppercase mb-1 text-center flex items-center gap-2 before:h-px before:flex-1 before:bg-gray-200 after:h-px after:flex-1 after:bg-gray-200">Customer Details</div>
                         <input type="text" id="customer-name" placeholder="Full Name" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium text-gray-700 focus:outline-none focus:border-green-500 transition-colors">
-                        <input type="tel" id="customer-phone" placeholder="Mobile Number (10 digits)" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium text-gray-700 focus:outline-none focus:border-green-500 transition-colors">
-                    </div>
+                        <div>
+    <input type="tel" id="customer-phone" placeholder="Mobile Number (10 digits)" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, ''); document.getElementById('phone-error-msg').classList.add('hidden'); this.classList.remove('border-red-500', 'ring-2', 'ring-red-200');" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs font-medium text-gray-700 focus:outline-none focus:border-green-500 transition-colors">
+    <span id="phone-error-msg" class="text-[10px] text-red-500 font-bold mt-0.5 hidden block"></span>
+</div>
 
                     <div id="address-input-container" class="transition-all duration-300 mt-2">
                         <div class="text-[10px] font-bold text-gray-400 uppercase mb-2 text-center flex items-center gap-2 before:h-px before:flex-1 before:bg-gray-200 after:h-px after:flex-1 after:bg-gray-200">Delivery Address</div>
@@ -1626,16 +1638,38 @@
         function sendOrderViaWhatsApp() {
             if(cart.length === 0 || !rawBranding.D) return;
             
-            const custName = document.getElementById('customer-name').value.trim();
-            const custPhone = document.getElementById('customer-phone').value.trim();
+            const nameInput = document.getElementById('customer-name');
+            const phoneInput = document.getElementById('customer-phone');
+            const phoneError = document.getElementById('phone-error-msg');
 
+            // Reset previous highlights
+            nameInput.classList.remove('border-red-500', 'ring-2', 'ring-red-200');
+            phoneInput.classList.remove('border-red-500', 'ring-2', 'ring-red-200');
+            phoneError.classList.add('hidden');
+
+            const custName = nameInput.value.trim();
+            const custPhone = phoneInput.value.trim();
+
+            // Validate Name (at least 3 characters)
             if (custName.length < 3) {
-                alert(currentLang === 'en' ? 'Please enter a valid full name (at least 3 characters).' : 'يرجى إدخال اسم كامل صحيح (3 أحرف على الأقل).');
+                nameInput.classList.add('border-red-500', 'ring-2', 'ring-red-200', 'animate-shake');
+                nameInput.focus();
+                setTimeout(() => nameInput.classList.remove('animate-shake'), 400);
                 return;
             }
 
+            // Validate Phone (exactly 10 digits)
             if (custPhone.length !== 10) {
-                alert(currentLang === 'en' ? `Please enter exactly 10 digits for your mobile number. You entered ${custPhone.length} digits.` : `يرجى إدخال 10 أرقام بالضبط لرقم هاتفك المحمول. لقد أدخلت ${custPhone.length} أرقام.`);
+                phoneInput.classList.add('border-red-500', 'ring-2', 'ring-red-200', 'animate-shake');
+                phoneInput.focus();
+                
+                // Show dynamic friendly message based on what they typed
+                phoneError.textContent = currentLang === 'en' 
+                    ? `Please enter a 10-digit mobile number (${custPhone.length}/10 entered)` 
+                    : `يرجى إدخال رقم جوال مكون من 10 أرقام (${custPhone.length}/10 تم إدخالها)`;
+                phoneError.classList.remove('hidden');
+
+                setTimeout(() => phoneInput.classList.remove('animate-shake'), 400);
                 return;
             }
 
