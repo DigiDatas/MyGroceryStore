@@ -26,3 +26,19 @@ self.addEventListener('activate', event => {
         })
     );
 });
+
+// 3. Inside the FETCH event (Network First, fallback to cache) - ADD THIS AT THE BOTTOM
+self.addEventListener('fetch', event => {
+    event.respondWith(
+        fetch(event.request)
+            .then(networkResponse => {
+                return caches.open(CACHE_NAME).then(cache => {
+                    cache.put(event.request, networkResponse.clone());
+                    return networkResponse;
+                });
+            })
+            .catch(() => {
+                return caches.match(event.request);
+            })
+    );
+});
