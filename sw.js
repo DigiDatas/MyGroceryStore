@@ -1,3 +1,13 @@
+// Define the cache name and the files you want to save for offline use
+const CACHE_NAME = 'grocery-store-cache-v2';
+const urlsToCache = [
+    '/',
+    '/index.html',
+    '/Files/Main/MainStyle.css',
+    '/Files/Main/maincode.js',
+    '/manifest.json'
+];
+
 // 1. Inside the INSTALL event
 self.addEventListener('install', event => {
     self.skipWaiting(); // Forces the new service worker to activate immediately!
@@ -27,7 +37,7 @@ self.addEventListener('activate', event => {
     );
 });
 
-// 3. Inside the FETCH event (Network First, fallback to cache) - ADD THIS AT THE BOTTOM
+// 3. Inside the FETCH event (Network First, fallback to cache)
 self.addEventListener('fetch', event => {
     event.respondWith(
         fetch(event.request)
