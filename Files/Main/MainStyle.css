@@ -1,1 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
 
+:root {
+    --font-en: 'Poppins', sans-serif;
+    --font-ar: 'Cairo', sans-serif;
+}
+
+body[dir="ltr"] { font-family: var(--font-en); }
+body[dir="rtl"] { font-family: var(--font-ar); }
+
+body { background-color: #f8fafc; }
+
+/* Shake Animation for Invalid Inputs */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+}
+.animate-shake {
+    animation: shake 0.4s ease-in-out;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Hide Scrollbar for Horizontal scrolling */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Card Interactions */
+.menu-card { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+.menu-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+
+/* Category Button Active State */
+.category-btn.active { background-color: #ef4444; color: white; border-color: #ef4444; }
+
+/* Image Loading Animation */
+.img-loading { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
+@keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+@keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
