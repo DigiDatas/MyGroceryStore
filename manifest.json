@@ -1,8 +1,8 @@
 {
   "name": "My Grocery Store",
   "short_name": "MyGroceryStore",
-  "start_url": "/MyGroceryStore/index.html",
-  "scope": "/MyGroceryStore/",
+  "start_url": "/MyGroceryStore/",
+"scope": "/MyGroceryStore/",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#ef4444",
