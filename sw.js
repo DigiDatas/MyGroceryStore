@@ -1,29 +1,11 @@
-// Define the cache name and the files you want to save for offline use
-const CACHE_NAME = 'grocery-store-cache-v2';
-const urlsToCache = [
-    '/',
-    '/index.html',
-    '/Files/Main/MainStyle.css',
-    '/Files/Main/maincode.js',
-    '/manifest.json'
-];
-
-// 1. Inside the INSTALL event
+// 1. Install event: Skip pre-caching files so nothing gets stuck
 self.addEventListener('install', event => {
-    self.skipWaiting(); // Forces the new service worker to activate immediately!
-    
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => {
-                return cache.addAll(urlsToCache);
-            })
-    );
+    self.skipWaiting();
 });
 
-// 2. Inside the ACTIVATE event
+// 2. Activate event: Clean up any old caches automatically
 self.addEventListener('activate', event => {
-    event.waitUntil(self.clients.claim()); // Forces the new service worker to take control of the page immediately!
-    
+    event.waitUntil(self.clients.claim());
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
@@ -37,18 +19,24 @@ self.addEventListener('activate', event => {
     );
 });
 
-// 3. Inside the FETCH event (Network First, fallback to cache)
+// 3. Fetch event: Stale-while-revalidate (Always serves latest, updates cache automatically)
 self.addEventListener('fetch', event => {
+    // Skip cross-origin requests (like Google Sheets, FontAwesome, or Tailwind CDN)
+    if (!event.request.url.startsWith(self.location.origin)) return;
+
     event.respondWith(
-        fetch(event.request)
-            .then(networkResponse => {
-                return caches.open(CACHE_NAME).then(cache => {
+        caches.open(CACHE_NAME).then(cache => {
+            return cache.match(event.request).then(cachedResponse => {
+                const fetchPromise = fetch(event.request).then(networkResponse => {
                     cache.put(event.request, networkResponse.clone());
                     return networkResponse;
+                }).catch(() => {
+                    // If offline and not in cache, fail gracefully
                 });
-            })
-            .catch(() => {
-                return caches.match(event.request);
-            })
+
+                // Return cached response immediately if available, while fetching the newest version in the background
+                return cachedResponse || fetchPromise;
+            });
+        })
     );
 });
