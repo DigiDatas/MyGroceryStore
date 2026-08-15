@@ -1,3 +1,5 @@
+const CACHE_NAME = 'grocery-store-dynamic-cache';
+
 // 1. Install event: Skip pre-caching files so nothing gets stuck
 self.addEventListener('install', event => {
     self.skipWaiting();
@@ -31,10 +33,9 @@ self.addEventListener('fetch', event => {
                     cache.put(event.request, networkResponse.clone());
                     return networkResponse;
                 }).catch(() => {
-                    // If offline and not in cache, fail gracefully
+                    // Offline fallback
                 });
 
-                // Return cached response immediately if available, while fetching the newest version in the background
                 return cachedResponse || fetchPromise;
             });
         })
